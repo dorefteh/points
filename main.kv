@@ -1,0 +1,438 @@
+#:import Clipboard kivy.core.clipboard.Clipboard
+
+<MDRaisedButton>
+        bold: True
+        font_size: 20
+        md_bg_color: app.theme_cls.primary_light
+<MyBT>
+        do_default_tab:False
+        size_hint: .9, .9
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        input_phone: input_phone
+        input_customer: input_customer
+        input_purchase: input_purchase
+        input_pref: input_pref
+        input_notif: input_notif
+        input_comment: input_comment
+        item_label: item_label
+        find_phone: find_phone
+        i2_label: i2_label
+        i3_label: i3_label
+        i4_label: i4_label
+        phonefio: phonefio
+        add_purchase: add_purchase
+        add_percent: add_percent
+        rew_phone: rew_phone
+        rew_customer: rew_customer
+        rew_purchase: rew_purchase
+        rew_points: rew_points
+        rew_pref: rew_pref
+        rew_notif: rew_notif
+        rew_comment: rew_comment
+        rew_for_cust: rew_for_cust
+
+
+        TabbedPanelItem:
+                text: "Создание\nпокупателя"
+                font_size: 15
+                MDBoxLayout:
+                        orientation: "vertical"
+                        size_hint: None, None
+                        height: root.height*0.95
+                        width: root.width*0.95
+
+                        padding: [0, 15, 0, 0]
+                        MDBoxLayout:
+                                padding: [0, 15, 0, 0]
+                                size_hint: None, None
+                                height: root.height*0.2
+                                width: root.width*0.8
+                                pos_hint: {"center_x": 0.6, "center_y": 0.5}
+                                orientation: "vertical"
+
+                                MDLabel:
+                                        text: 'Новый покупатель'
+                                        font_size: 32
+
+                        MDGridLayout:
+                                spacing: 10
+                                cols:2
+                                size_hint_y: None
+                                height: root.height*0.6
+
+
+                                Label:
+                                        text:'Телефон\n(обязательное\nполе):'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_phone
+                                        multiline: False
+                                        hint_text: "Введите номер\nтелефона(без +7)"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'int'
+                                Label:
+                                        text: 'ФИО\n(обфзательное\nполе):'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_customer
+                                        multiline: False
+                                        hint_text: "Введите ФИО"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                Label:
+                                        text:'Сумма покупок:'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_purchase
+                                        multiline: False
+                                        hint_text: "Введите сумму\nпокупки"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'float'
+
+                                Label:
+                                        text:'Предпочтения:'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_pref
+                                        multiline: False
+                                        hint_text: "Добавьте\nпредпочтения"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                Label:
+                                        text:'Оповещения:'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_notif
+                                        multiline: False
+                                        hint_text: "Оповещения"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'int'
+                                Label:
+                                        text:'Комментарий:'
+                                        font_size: 20
+                                TextInput:
+                                        id: input_comment
+                                        multiline: False
+                                        hint_text: "Добавьте\nкомментарий"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+
+                                Label:
+                                        text: 'Только телефон\n и ФИО'
+                                        font_size: 20
+
+                                CheckBox:
+                                        on_active: root.checkbox_click(self, self.active)                      
+
+
+
+                        MDBoxLayout:
+                                padding: [0, 15, 0, 0]
+                                size_hint: None, None
+                                height: root.height*0.1
+                                width: root.width*0.5
+                                pos_hint: {"center_x": 0.65, "center_y": 0.5}
+                                MDRaisedButton:
+                                        text: "Добавить"
+                                        size_hint: None, None
+                                        height: root.height*0.8
+                                        width: root.width*0.5
+                                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                        on_release: root.submit()
+
+                        MDBoxLayout:
+                                orientation: "vertical"
+                                size_hint_y: None
+                                height: root.height*0.1
+                                Label:
+                                        id: item_label
+                                        text_size: self.size
+                                        text: ''
+
+        TabbedPanelItem:
+                text: "Вывод\nинформации"
+                font_size: 15
+
+                MDBoxLayout:
+                        orientation: "vertical"
+                        size_hint: None, None
+                        height: root.height*0.95
+                        width: root.width*0.95
+                        padding: [15, 15, 0, 0]
+                        spacing: 15
+
+                        MDBoxLayout:
+                                orientation: "vertical"
+                                size_hint_y: None
+                                height: root.height*0.15
+                                Label:
+                                        text: 'Получение данных'
+                                        font_size: 32
+                        
+                        MDGridLayout:
+                                cols: 2
+                                spacing: 25
+                                size_hint_y: None
+                                height: root.height*0.20
+                                MDRaisedButton:
+                                        text: "Искать по номеру"
+                                        font_size: 15
+                                        on_release: root.show_phone()
+
+                                TextInput:
+                                        hint_text: "Введите номер\nили часть имени"
+                                        id: find_phone
+                                        multiline: False
+                                        size_hint_y: None
+                                        height: root.height*0.065
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                MDRaisedButton:
+                                        text: "Искать по имени"
+                                        font_size: 15
+                                        on_release: root.show_name()  
+                                MDRaisedButton:
+                                        text: "Все данные"
+                                        font_size: 15
+                                        on_release: root.all_data()
+
+                                MDRaisedButton:
+                                        text: "Копировать"
+                                        font_size: 15
+                                        on_release: Clipboard.copy(root.i2_label.text)
+                                MDRaisedButton:
+                                        text: "Выгрузить данные в xlsx"
+                                        font_size: 15
+                                        on_release: root.make_report()
+
+
+                        AnchorLayout:
+                                orientation: "vertical"
+                                size_hint_y: None
+                                height: root.height*0.6
+                                MDLabel:
+
+                                        halign: 'left'
+                                        valign: 'top'
+                                        text_size: self.size
+                                        id: i2_label
+                                        text: ''
+
+        TabbedPanelItem:
+                text: "Подсчет\nбонусов"
+                font_size: 15
+                MDBoxLayout:
+                        padding: [15, 15, 0, 0]
+                        spacing: 15
+                        orientation: "vertical"
+                        size_hint: None, None
+                        height: root.height*0.95
+                        width: root.width*0.95
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        MDBoxLayout:
+                                size_hint_y: None
+                                height: root.height*0.2
+                                orientation: "vertical"
+                                Label:
+                                        text: 'Подсчет бонусов'
+                                        font_size: 32
+
+
+                        MDBoxLayout:
+                                size_hint_y: None
+                                height: root.height*0.2
+                                spacing: 15
+                                orientation: 'vertical'
+                                TextInput:
+                                        id: phonefio
+                                        multiline: False
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        size_hint: (1, 0.5)
+                                        hint_text: "Телефон"
+
+                                TextInput:
+                                        id: add_purchase
+                                        multiline: False
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        size_hint: (1, 0.5)
+                                        hint_text: "Введите сумму"
+                                        input_filter: 'float'
+                                TextInput:
+                                        id: add_percent
+                                        multiline: False
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        size_hint: (1, 0.5)
+                                        hint_text: "Процент (по умолчанию 3%)"
+                                        input_type: 'number'
+
+                        MDBoxLayout:
+                                orientation: 'vertical'
+                                size_hint: None, None
+                                height: root.height*0.1
+                                width: root.width*0.5
+                                pos_hint: {"center_x": 0.55, "center_y": 0.5}
+
+                                Label:
+                                        text: ''
+
+                                MDRaisedButton:
+                                        text: "Посчитать бонусы"
+                                        on_release: root.accural()
+
+
+                        Label:
+                                id: i3_label
+                                size_hint_y: None
+                                text_size: self.size
+                                height: root.height*0.4
+                                valign: "top"
+                                text: ''
+
+
+
+
+        TabbedPanelItem:
+                text: "Изменение и\nудаление"
+                font_size: 15
+                MDBoxLayout:
+                        padding: [15, 15, 0, 0]
+                        spacing: 15
+                        orientation: "vertical"
+                        size_hint: None, None
+                        height: root.height*0.95
+                        width: root.width*0.95
+                        MDBoxLayout:
+                                size_hint_y: None
+                                height: root.height*0.125
+                                padding: [15, 15, 0, 0]
+                                Label:
+                                        text: 'Изменение/удаление\nданных базы'
+                                        font_size: 32
+
+                        TextInput:
+                                id: rew_for_cust
+                                multiline: False
+                                padding_y: (5,5)
+                                padding_x: (4,4)
+                                font_size: "18sp"
+                                size_hint_y: None
+                                height: root.height*0.1
+                                hint_text: "Введите номер покупателя,\nданные которого необходимо\n изменить/удалить"
+                                hint_text_size: self.size
+                        MDGridLayout:
+                                cols: 2
+                                size_hint_y: None
+                                height: root.height*0.50
+
+
+                                Label:
+                                        text:'Телефон:'
+                                TextInput:
+                                        id: rew_phone
+                                        multiline: False
+                                        hint_text: "Введите номер\nтелефона"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'int'
+                                Label:
+                                        text: 'ФИО:'
+                                TextInput:
+                                        id: rew_customer
+                                        multiline: False
+                                        hint_text: "Введите новое\nимя"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                Label:
+                                        text:'Сумма покупок:'
+                                TextInput:
+                                        id: rew_purchase
+                                        multiline: False
+                                        hint_text: "Изменить сумму\nпокупок"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'float'
+
+                                Label:
+                                        text:'Баллы:'
+                                TextInput:
+                                        id: rew_points
+                                        multiline: False
+                                        hint_text: "Изменить количество\nбаллов"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'float'
+
+                                Label:
+                                        text:'Предпочтения:'
+                                TextInput:
+                                        id: rew_pref
+                                        multiline: False
+                                        hint_text: "Изменить\nпредпочтения"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                Label:
+                                        text:'Оповещения:'
+                                TextInput:
+                                        id: rew_notif
+                                        multiline: False
+                                        hint_text: "Изменить статус\nоповещений"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                                        input_type: 'number'
+                                        input_filter: 'int'
+                                Label:
+                                        text:'Комментарий:'
+                                TextInput:
+                                        id: rew_comment
+                                        multiline: False
+                                        hint_text: "Изменить\nкомментарий"
+                                        padding_y: (5,5)
+                                        font_size: "18sp"
+                        MDGridLayout:
+                                cols: 2
+                                spacing: 5
+                                size_hint: None, None
+                                width: root.width*0.5
+                                height: root.height*0.025
+                                pos_hint: {"center_x": 0.38, "center_y": 0.5}
+
+                                MDRaisedButton:
+                                        text: "Переписать данные\nо покупателе"
+                                        size_hint: None, None 
+                                        height: root.height*0.5
+                                        width: root.width*0.5
+                                        font_size: 14
+                                        on_release: root.update_cust()
+
+                                MDRaisedButton:
+                                        text: "Удалить покупателя\nиз базы"
+                                        size_hint: None, None 
+                                        height: root.height*0.5
+                                        width: root.width*0.5
+                                        font_size: 14
+                                        on_release: root.delete_cust()
+                        MDLabel:
+                                size_hint_y: None
+                                height: root.height*0.15
+                                text_size: self.size
+                                id: i4_label
+                                text: ''
+
+
+                
+                
+                
+
+
